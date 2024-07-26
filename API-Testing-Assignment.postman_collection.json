@@ -1,0 +1,1147 @@
+{
+	"info": {
+		"_postman_id": "18588210-5f97-4f6e-8c74-d1ed09ab7d24",
+		"name": "API-Testing-Assignment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30809419"
+	},
+	"item": [
+		{
+			"name": "Get All Activites",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () => \r",
+							"{\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is an array\", () => \r",
+							"{\r",
+							"    pm.response.to.have.jsonBody();\r",
+							"    pm.expect(pm.response.json()).to.be.an('array');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type is application/json\", () => \r",
+							"{\r",
+							"    pm.response.to.have.header(\"content-type\", \"application/json; charset=utf-8; v=1.0\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Each item has expected properties\", () =>\r",
+							" {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    jsonData.forEach(function(item)\r",
+							"    {\r",
+							"        pm.expect(item).to.have.all.keys('id', 'title', 'dueDate', 'completed');\r",
+							"        pm.expect(item.id).to.be.a('number');\r",
+							"        pm.expect(item.title).to.be.a('string');\r",
+							"        pm.expect(item.dueDate).to.be.a('string');\r",
+							"        pm.expect(item.completed).to.be.a('boolean');\r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "text/plain; v=1.0"
+					}
+				],
+				"url": {
+					"raw": "{{baseURL}}Activities",
+					"host": [
+						"{{baseURL}}Activities"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Activites",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () =>\r",
+							"{\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is an object\", () =>\r",
+							"{\r",
+							"    pm.response.to.have.jsonBody();\r",
+							"    pm.expect(pm.response.json()).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type is application/json\", () => \r",
+							"{\r",
+							"    pm.response.to.have.header(\"content-type\", \"application/json; charset=utf-8; v=1.0\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response object has expected properties\", () => \r",
+							"{\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.all.keys('id', 'title', 'dueDate', 'completed');\r",
+							"    pm.expect(jsonData.id).to.be.a('number');\r",
+							"    pm.expect(jsonData.title).to.be.a('string');\r",
+							"    pm.expect(jsonData.dueDate).to.be.a('string');\r",
+							"    pm.expect(jsonData.completed).to.be.a('boolean');\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "text/plain; v=1.0"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json; v=1.0"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\":4,\r\n    \"title\":\"Activity 4\",\r\n    \"dueDate\":\"2024-07-26T05:56:32.983Z\",\r\n    \"completed\":true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}Activities",
+					"host": [
+						"{{baseURL}}Activities"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Activities by ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () =>\r",
+							"{\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is an object\", () =>\r",
+							"{\r",
+							"    pm.response.to.have.jsonBody();\r",
+							"    pm.expect(pm.response.json()).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type is application/json\", () => \r",
+							"{\r",
+							"    pm.response.to.have.header(\"content-type\", \"application/json; charset=utf-8; v=1.0\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response object has expected properties\", () => \r",
+							"{\r",
+							"    var jsonData = pm.response.json();\r",
+							"\r",
+							"    pm.expect(jsonData).to.have.all.keys('id', 'title', 'dueDate', 'completed');\r",
+							"    pm.expect(jsonData.id).to.be.a('number');\r",
+							"    pm.expect(jsonData.title).to.be.a('string');\r",
+							"    pm.expect(jsonData.dueDate).to.be.a('string');\r",
+							"    pm.expect(jsonData.completed).to.be.a('boolean');\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "text/plain; v=1.0"
+					}
+				],
+				"url": {
+					"raw": "{{baseURL}}Activities/4",
+					"host": [
+						"{{baseURL}}Activities"
+					],
+					"path": [
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Activities by ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () =>\r",
+							"{\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is an object\", () =>\r",
+							"{\r",
+							"    pm.response.to.have.jsonBody();\r",
+							"    pm.expect(pm.response.json()).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type is application/json\", () => \r",
+							"{\r",
+							"    pm.response.to.have.header(\"content-type\", \"application/json; charset=utf-8; v=1.0\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response object has expected properties\", () => \r",
+							"{\r",
+							"    var jsonData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(jsonData).to.have.all.keys('id', 'title', 'dueDate', 'completed');\r",
+							"    pm.expect(jsonData.id).to.be.a('number');\r",
+							"    pm.expect(jsonData.title).to.be.a('string');\r",
+							"    pm.expect(jsonData.dueDate).to.be.a('string');\r",
+							"    pm.expect(jsonData.completed).to.be.a('boolean');\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "accept",
+						"value": "text/plain; v=1.0"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json; v=1.0"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\":4,\r\n    \"title\":\"Augasta4\",\r\n    \"dueDate\":\"2024-07-26T06:17:00.503Z\",\r\n    \"completed\":true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}Activities/4",
+					"host": [
+						"{{baseURL}}Activities"
+					],
+					"path": [
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Books",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () => \r",
+							"{\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is an array\", () => \r",
+							"{\r",
+							"    pm.response.to.have.jsonBody();\r",
+							"    pm.expect(pm.response.json()).to.be.an('array');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type is application/json\", () => \r",
+							"{\r",
+							"    pm.response.to.have.header(\"content-type\", \"application/json; charset=utf-8; v=1.0\");\r",
+							"});\r",
+							"\r",
+							"var responseJson = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Response body is an array\",() => \r",
+							"{\r",
+							"    pm.expect(responseJson).to.be.an('array');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validate book schema\", () => \r",
+							"{\r",
+							"    responseJson.forEach(function(book) \r",
+							"    {\r",
+							"        pm.expect(book).to.have.all.keys('id', 'title', 'description', 'pageCount', 'excerpt', 'publishDate');\r",
+							"        pm.expect(book.id).to.be.a('number');\r",
+							"        pm.expect(book.title).to.be.a('string');\r",
+							"        pm.expect(book.description).to.be.a('string');\r",
+							"        pm.expect(book.pageCount).to.be.a('number');\r",
+							"        pm.expect(book.excerpt).to.be.a('string');\r",
+							"        pm.expect(new Date(book.publishDate)).to.be.a('date');\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							"pm.test(\"No books with missing or null values\", () => \r",
+							"{\r",
+							"    responseJson.forEach(function(book) \r",
+							"    {\r",
+							"        pm.expect(book.id).to.not.be.null;\r",
+							"        pm.expect(book.title).to.not.be.null;\r",
+							"        pm.expect(book.description).to.not.be.null;\r",
+							"        pm.expect(book.pageCount).to.not.be.null;\r",
+							"        pm.expect(book.excerpt).to.not.be.null;\r",
+							"        pm.expect(book.publishDate).to.not.be.null;\r",
+							"    });\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "text/plain; v=1.0"
+					}
+				],
+				"url": {
+					"raw": "{{baseURL}}Books",
+					"host": [
+						"{{baseURL}}Books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All cover photos",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () => \r",
+							"{\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is an array\", () => \r",
+							"{\r",
+							"    pm.response.to.have.jsonBody();\r",
+							"    pm.expect(pm.response.json()).to.be.an('array');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type is application/json\", () => \r",
+							"{\r",
+							"    pm.response.to.have.header(\"content-type\", \"application/json; charset=utf-8; v=1.0\");\r",
+							"});\r",
+							"\r",
+							"var responseJson = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Response body is an array\",() => \r",
+							"{\r",
+							"    pm.expect(responseJson).to.be.an('array');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validate cover photo schema\", () => \r",
+							"{\r",
+							"    responseJson.forEach(function(coverPhoto) \r",
+							"    {\r",
+							"        pm.expect(coverPhoto).to.have.all.keys('id', 'idBook', 'url');\r",
+							"        pm.expect(coverPhoto.id).to.be.a('number');\r",
+							"        pm.expect(coverPhoto.idBook).to.be.a('number');\r",
+							"        pm.expect(coverPhoto.url).to.be.a('string');\r",
+							"        pm.expect(coverPhoto.url).to.match(/^https:\\/\\/placeholdit\\.imgix\\.net\\/.*$/);\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							"pm.test(\"No cover photos with missing or null values\", () => \r",
+							"\r",
+							"{\r",
+							"    responseJson.forEach(function(coverPhoto) \r",
+							"    {\r",
+							"        pm.expect(coverPhoto.id).to.not.be.null;\r",
+							"        pm.expect(coverPhoto.idBook).to.not.be.null;\r",
+							"        pm.expect(coverPhoto.url).to.not.be.null;\r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "text/plain; v=1.0"
+					}
+				],
+				"url": {
+					"raw": "{{baseURL}}CoverPhotos",
+					"host": [
+						"{{baseURL}}CoverPhotos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create new author",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () =>\r",
+							"{\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is an object\", () =>\r",
+							"{\r",
+							"    pm.response.to.have.jsonBody();\r",
+							"    pm.expect(pm.response.json()).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type is application/json\", () => \r",
+							"{\r",
+							"    pm.response.to.have.header(\"content-type\", \"application/json; charset=utf-8; v=1.0\");\r",
+							"});\r",
+							"var responseJson = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Validate author schema\", function () {\r",
+							"    pm.expect(responseJson).to.have.all.keys('id', 'idBook', 'firstName', 'lastName');\r",
+							"    pm.expect(responseJson.id).to.be.a('number');\r",
+							"    pm.expect(responseJson.idBook).to.be.a('number');\r",
+							"    pm.expect(responseJson.firstName).to.be.a('string');\r",
+							"    pm.expect(responseJson.lastName).to.be.a('string');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"No fields are null\", function () {\r",
+							"    pm.expect(responseJson.id).to.not.be.null;\r",
+							"    pm.expect(responseJson.idBook).to.not.be.null;\r",
+							"    pm.expect(responseJson.firstName).to.not.be.null;\r",
+							"    pm.expect(responseJson.lastName).to.not.be.null;\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "text/plain; v=1.0"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json; v=1.0"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\":0,\r\n    \"idBook\":0,\r\n    \"firstName\":\"Lasta\",\r\n    \"lastName\":\"Augasta\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}Authors",
+					"host": [
+						"{{baseURL}}Authors"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Author By ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () => \r",
+							"{\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is an object\", () => \r",
+							"{\r",
+							"    pm.response.to.have.jsonBody();\r",
+							"    pm.expect(pm.response.json()).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type is application/json\", () => \r",
+							"{\r",
+							"    pm.response.to.have.header(\"content-type\", \"application/json; charset=utf-8; v=1.0\");\r",
+							"});\r",
+							"\r",
+							"var responseJson = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Validate author schema\", ()=> \r",
+							"{\r",
+							"    pm.expect(responseJson).to.have.all.keys('id', 'idBook', 'firstName', 'lastName');\r",
+							"    pm.expect(responseJson.id).to.be.a('number');\r",
+							"    pm.expect(responseJson.idBook).to.be.a('number');\r",
+							"    pm.expect(responseJson.firstName).to.be.a('string');\r",
+							"    pm.expect(responseJson.lastName).to.be.a('string');\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"No fields are null\", () => \r",
+							"{\r",
+							"    pm.expect(responseJson.id).to.not.be.null;\r",
+							"    pm.expect(responseJson.idBook).to.not.be.null;\r",
+							"    pm.expect(responseJson.firstName).to.not.be.null;\r",
+							"    pm.expect(responseJson.lastName).to.not.be.null;\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "text/plain; v=1.0"
+					}
+				],
+				"url": {
+					"raw": "{{baseURL}}Authors/8",
+					"host": [
+						"{{baseURL}}Authors"
+					],
+					"path": [
+						"8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Author by ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseJson = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 200\", () => \r",
+							"{\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is an object\", () => \r",
+							"{\r",
+							"    pm.response.to.have.jsonBody();\r",
+							"    pm.expect(pm.response.json()).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type is application/json\", () => \r",
+							"{\r",
+							"    pm.response.to.have.header(\"content-type\", \"application/json; charset=utf-8; v=1.0\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validate author schema\", function () \r",
+							"{\r",
+							"    pm.expect(responseJson).to.have.all.keys('id', 'idBook', 'firstName', 'lastName');\r",
+							"    pm.expect(responseJson.id).to.be.a('number');\r",
+							"    pm.expect(responseJson.idBook).to.be.a('number');\r",
+							"    pm.expect(responseJson.firstName).to.be.a('string');\r",
+							"    pm.expect(responseJson.lastName).to.be.a('string');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"No fields are null\", function () {\r",
+							"    pm.expect(responseJson.id).to.not.be.null;\r",
+							"    pm.expect(responseJson.idBook).to.not.be.null;\r",
+							"    pm.expect(responseJson.firstName).to.not.be.null;\r",
+							"    pm.expect(responseJson.lastName).to.not.be.null;\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "accept",
+						"value": "text/plain; v=1.0"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json; v=1.0"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\":8,\r\n    \"idBook\":0,\r\n    \"firstName\":\"string\",\r\n    \"lastName\":\"string\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}Authors/8",
+					"host": [
+						"{{baseURL}}Authors"
+					],
+					"path": [
+						"8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create new user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseJson = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 200\", () => \r",
+							"{\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response is an object\", () => \r",
+							"{\r",
+							"    pm.response.to.have.jsonBody();\r",
+							"    pm.expect(pm.response.json()).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type is application/json\", () => \r",
+							"{\r",
+							"    pm.response.to.have.header(\"content-type\", \"application/json; charset=utf-8; v=1.0\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validate user schema\", function () {\r",
+							"    pm.expect(responseJson).to.have.all.keys('id', 'userName', 'password');\r",
+							"    pm.expect(responseJson.id).to.be.a('number');\r",
+							"    pm.expect(responseJson.userName).to.be.a('string');\r",
+							"    pm.expect(responseJson.password).to.be.a('string');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"No fields are null\", function () {\r",
+							"    pm.expect(responseJson.id).to.not.be.null;\r",
+							"    pm.expect(responseJson.userName).to.not.be.null;\r",
+							"    pm.expect(responseJson.password).to.not.be.null;\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json; v=1.0"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\":0,\r\n    \"userName\":\"string\",\r\n    \"password\":\"string\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}Users",
+					"host": [
+						"{{baseURL}}Users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", ()=> \r",
+							"{\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var responseJson = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Response time is less than 4000ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Validate user schema\", function () {\r",
+							"    pm.expect(responseJson).to.have.all.keys('id', 'userName', 'password');\r",
+							"    pm.expect(responseJson.id).to.be.a('number');\r",
+							"    pm.expect(responseJson.userName).to.be.a('string');\r",
+							"    pm.expect(responseJson.password).to.be.a('string');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"No fields are null\", function () {\r",
+							"    pm.expect(responseJson.id).to.not.be.null;\r",
+							"    pm.expect(responseJson.userName).to.not.be.null;\r",
+							"    pm.expect(responseJson.password).to.not.be.null;\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json; v=1.0"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\":0,\r\n    \"userName\":\"string\",\r\n    \"password\":\"string\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}Users/6",
+					"host": [
+						"{{baseURL}}Users"
+					],
+					"path": [
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Book",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", ()=> \r",
+							"{\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type is application/json; v=1.0\", () => \r",
+							"{\r",
+							"    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=utf-8; v=1.0\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 4000ms\", () =>\r",
+							"{\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+							"});\r",
+							"\r",
+							"var responseJson = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Validate book schema\", ()=> \r",
+							"{\r",
+							"    pm.expect(responseJson).to.have.all.keys('id', 'title', 'description', 'pageCount', 'excerpt', 'publishDate');\r",
+							"    pm.expect(responseJson.id).to.be.a('number');\r",
+							"    pm.expect(responseJson.title).to.be.a('string');\r",
+							"    pm.expect(responseJson.description).to.be.a('string');\r",
+							"    pm.expect(responseJson.pageCount).to.be.a('number');\r",
+							"    pm.expect(responseJson.excerpt).to.be.a('string');\r",
+							"    pm.expect(responseJson.publishDate).to.be.a('string');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"No fields are null\", ()=> \r",
+							"{\r",
+							"    pm.expect(responseJson.id).to.not.be.null;\r",
+							"    pm.expect(responseJson.title).to.not.be.null;\r",
+							"    pm.expect(responseJson.description).to.not.be.null;\r",
+							"    pm.expect(responseJson.pageCount).to.not.be.null;\r",
+							"    pm.expect(responseJson.excerpt).to.not.be.null;\r",
+							"    pm.expect(responseJson.publishDate).to.not.be.null;\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json; v=1.0"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\":9,\r\n    \"title\":\"MyBook9\",\r\n    \"description\":\"string\",\r\n    \"pageCount\":0,\r\n    \"excerpt\":\"string\",\r\n    \"publishDate\":\"2024-07-26T08:04:51.432Z\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}Books/9",
+					"host": [
+						"{{baseURL}}Books"
+					],
+					"path": [
+						"9"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Books",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseJson = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 200\", ()=> \r",
+							"{\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 4000ms\", () =>\r",
+							"{\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validate book schema\", function () {\r",
+							"    pm.expect(responseJson).to.have.all.keys('id', 'title', 'description', 'pageCount', 'excerpt', 'publishDate');\r",
+							"    pm.expect(responseJson.id).to.be.a('number');\r",
+							"    pm.expect(responseJson.title).to.be.a('string');\r",
+							"    pm.expect(responseJson.description).to.be.a('string');\r",
+							"    pm.expect(responseJson.pageCount).to.be.a('number');\r",
+							"    pm.expect(responseJson.excerpt).to.be.a('string');\r",
+							"    pm.expect(responseJson.publishDate).to.be.a('string');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"No fields are null\", ()=> \r",
+							"{\r",
+							"    pm.expect(responseJson.id).to.not.be.null;\r",
+							"    pm.expect(responseJson.title).to.not.be.null;\r",
+							"    pm.expect(responseJson.description).to.not.be.null;\r",
+							"    pm.expect(responseJson.pageCount).to.not.be.null;\r",
+							"    pm.expect(responseJson.excerpt).to.not.be.null;\r",
+							"    pm.expect(responseJson.publishDate).to.not.be.null;\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json; v=1.0"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\":0,\r\n    \"title\":\"string\",\r\n    \"description\":\"string\",\r\n    \"pageCount\":0,\r\n    \"excerpt\":\"string\",\r\n    \"publishDate\":\"2024-07-26T08:14:47.589Z\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}Books",
+					"host": [
+						"{{baseURL}}Books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update pet",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\",() => \r",
+							"{\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type is JSON\", () => \r",
+							"{\r",
+							"    pm.response.to.have.header(\"Content-Type\", \"application/json\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 400ms\", () =>\r",
+							"{\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body matches the expected model\", () =>\r",
+							"{\r",
+							"    var responseJson = pm.response.json();\r",
+							"\r",
+							"    pm.expect(responseJson).to.be.an('object').that.includes.all.keys('id', 'category', 'name', 'photoUrls', 'tags', 'status');\r",
+							"    pm.expect(responseJson.category).to.be.an('object').that.includes.all.keys('id', 'name');\r",
+							"    pm.expect(responseJson.photoUrls).to.be.an('array');\r",
+							"    pm.expect(responseJson.tags).to.be.an('array');\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 0,\r\n  \"category\": {\r\n    \"id\": 0,\r\n    \"name\": \"string\"\r\n  },\r\n  \"name\": \"doggie\",\r\n  \"photoUrls\": [\r\n    \"string\"\r\n  ],\r\n  \"tags\": [\r\n    {\r\n      \"id\": 0,\r\n      \"name\": \"string\"\r\n    }\r\n  ],\r\n  \"status\": \"available\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/pet",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"pet"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add new pet",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () => \r",
+							"{\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type is JSON\", () =>\r",
+							"{\r",
+							"    pm.response.to.have.header(\"Content-Type\", \"application/json\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body contains required fields\", () =>\r",
+							"{\r",
+							"    var responseJson = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseJson).to.have.property(\"id\");\r",
+							"    pm.expect(responseJson).to.have.property(\"category\");\r",
+							"    pm.expect(responseJson.category).to.have.property(\"id\");\r",
+							"    pm.expect(responseJson.category).to.have.property(\"name\");\r",
+							"    pm.expect(responseJson).to.have.property(\"name\");\r",
+							"    pm.expect(responseJson).to.have.property(\"photoUrls\");\r",
+							"    pm.expect(responseJson).to.have.property(\"tags\");\r",
+							"    pm.expect(responseJson).to.have.property(\"status\");\r",
+							"    \r",
+							"    pm.expect(responseJson.id).to.be.a('number');\r",
+							"    pm.expect(responseJson.category.id).to.be.a('number');\r",
+							"    pm.expect(responseJson.category.name).to.be.a('string');\r",
+							"    pm.expect(responseJson.name).to.be.a('string');\r",
+							"    pm.expect(responseJson.photoUrls).to.be.an('array');\r",
+							"    pm.expect(responseJson.tags).to.be.an('array');\r",
+							"    pm.expect(responseJson.status).to.be.a('string');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 400ms\", () =>\r",
+							"{\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(400);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 0,\r\n  \"category\": {\r\n    \"id\": 0,\r\n    \"name\": \"string\"\r\n  },\r\n  \"name\": \"doggie\",\r\n  \"photoUrls\": [\r\n    \"string\"\r\n  ],\r\n  \"tags\": [\r\n    {\r\n      \"id\": 0,\r\n      \"name\": \"string\"\r\n    }\r\n  ],\r\n  \"status\": \"available\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/pet",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"pet"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "https://fakerestapi.azurewebsites.net/api/v1/",
+			"type": "string"
+		},
+		{
+			"key": "baseURL2",
+			"value": "https://simple-books-api.glitch.me",
+			"type": "string"
+		}
+	]
+}
